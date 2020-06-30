@@ -67,13 +67,13 @@ class Stuff extends StatelessWidget {
                       textCapitalization: TextCapitalization.sentences,
                       style: TextStyle(
                           color: Colors.grey[600],
-                          fontSize: 30.sp
+                          fontSize: 30.sp,
                       ),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                        top: 40.h, left: 60.w, right: 60.w, bottom: 0.0),
+                        top: 40.h, left: 60.w, right: 60.w, bottom: 0.0,),
                     child: TextField(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -99,7 +99,7 @@ class Stuff extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 40.w, right: 60.w),
+                    padding: EdgeInsets.only(left: 40.w, right: 60.w,),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -135,7 +135,9 @@ class Stuff extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       children: model.templateList.map((template) {
                         return GestureDetector(
-                          onTap: model.onTap(template),
+                          onTap: () {
+                            model.onTap(template);
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.sp),
