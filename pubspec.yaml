@@ -11,60 +11,127 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  
+  # State Management
+  stacked: ^1.5.7+1
+  stacked_services: 0.4.3
   stacked_hooks: ^0.1.1+3
   flutter_hooks: ^0.9.0
   observable_ish: ^2.1.4
-  flutter_svg: ^0.17.4
-  pin_code_fields: ^3.1.2
-  sms: ^0.2.4 
-  pdf: ^1.5.0
-  path_provider: ^1.6.5
-  flutter_full_pdf_viewer: ^1.0.6
-  open_file: ^3.0.1
 
-  # State Management
-  stacked: ^1.5.7+1
+  # For getting the ISO code based on the sim
+  flutter_sim_country_code: ^0.0.3
+
+  # For text fields with countries
+  intl_phone_number_input: ^0.4.6+2
+
+  # For google sign in
+  google_sign_in: ^4.5.1
+
+  # For generating IDs
+  uuid: 2.2.0
+
+  # for mock services
+  mockito: ^4.1.1
+
+  # for network services
+  http: ^0.12.1
+  dio: ^3.0.9
+
+  # For logging in the app
+  logger: ^0.9.1
+
+  # For linting
+  pedantic: ^1.9.0
+
+  # To select images from gallery or camera
+  image_picker: ^0.6.7+3
+
+  fluttertoast: ^5.0.1
+
+  # for encryption
+  encrypt: ^4.0.2
+
+  # Error reporting
+  sentry: ^3.0.1
 
   # Utilities
-  stacked_services: 0.4.3
   get_it: ^4.0.2
   injectable:
   device_preview: ^0.4.5
-  flare_flutter: ^2.0.3
+  flare_flutter:
+  connectivity: ^0.4.9
+  app_settings: ^4.0.0
+  device_info: ^0.4.2+4
+  flutter_svg: ^0.17.4
+  pin_code_fields: ^3.1.2
+  pdf: ^1.5.0
+  path_provider: ^1.6.11
+  flutter_full_pdf_viewer: ^1.0.6
+  open_file: ^3.0.1
+  sticky_headers: ^0.1.8+1
+  intl: ^0.16.1
 
+  # ScreenShot
+  screenshot: ^0.2.0
+
+  # Sharing Images And Files
+  wc_flutter_share: ^0.2.2
+
+  # SnackBar
+  flushbar: ^1.10.4
+  oktoast: ^2.1.8
+  
   # Navigation
   auto_route:
 
   #UI Widgets
   cupertino_icons: ^0.1.3
-  fancy_on_boarding: ^1.6.0
+  worm_indicator: ^0.2.4
+  animated_text_kit: ^2.2.0
 
-  # add responsive builder
-  responsive_builder: ^0.2.0+2
   # add flutter_screenutil
   flutter_screenutil: ^1.1.0
 
   # to attain permissions required to get contacts
   permission_handler: ^5.0.0
-  
-  # to obatin contacts on the phone
+
+  # to obtain contacts on the phone
   contacts_service: ^0.4.6
 
   # JSON serialization
   json_annotation: ^3.0.1
 
+  # HIVE DB
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
+
+  # Persisting user settings
+  shared_preferences: ^0.5.8
+
+  # Notifications
+  flutter_local_notifications: ^1.4.4+1
+
+  # Alternative country code picker
+  country_pickers: ^1.3.0
+  
+#  Sending Messages
+#  url_launcher: ^5.5.0
+
+dependency_overrides:
+  dartx: ^0.3.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
-  flutter_launcher_icons: ^0.7.5
-
-  # JSON serialization
-  json_serializable: ^3.3.0
-
-  # Code generation
   build_runner: ^1.10.0
+  freezed: ^0.10.9
+  flutter_launcher_icons: ^0.7.5
+  hive_generator: ^0.7.0+2
+  json_serializable: ^3.3.0
 
   #Run this script to generate the app icon: "flutter pub pub run flutter_launcher_icons:main"
 flutter_icons:
@@ -72,19 +139,20 @@ flutter_icons:
   ios: true
   image_path: "assets/images/app_icon.png"
 
-
-
 flutter:
 
   uses-material-design: true
 
   assets:
     # - assets/
-    - assets/images/  
-    - assets/fonts/  
+    - assets/images/
+    - assets/fonts/
     - assets/icons/
+    - assets/icons/svg/
     - assets/images/onboarding/
     - assets/animations/
+    - assets/languages/
+    - assets/languages/icons/
 
 
   fonts:

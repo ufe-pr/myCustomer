@@ -1,14 +1,13 @@
-
 import 'package:flutter/widgets.dart';
 
 /// A widget to fade in its child widget when inserted into the widget tree
-/// 
+///
 /// Example:
 ///
 /// FadeIn(
 ///   child: HomeView(),
 /// ),
-/// 
+///
 class FadeIn extends StatefulWidget {
   final Widget child;
 
@@ -17,7 +16,7 @@ class FadeIn extends StatefulWidget {
   const FadeIn({
     Key key,
     @required this.child,
-    this.duration = const Duration(milliseconds: 500),
+    this.duration = const Duration(milliseconds: 800),
   })  : assert(child != null),
         super(key: key);
 
@@ -39,7 +38,7 @@ class _FadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
-    _controller.forward();
+    _controller..forward();
     super.initState();
   }
 

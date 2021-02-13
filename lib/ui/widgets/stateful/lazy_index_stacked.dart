@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 
-// A modified Index Stacked class of flutter, inspiration from Filledstack Fan
+// A modified Index Stacked class of flutter, inspiration from Filledstack
 // @Eternity Isaac Adariku 19-Jun-2020
 
 class LazyIndexedStack extends StatefulWidget {

@@ -2,6 +2,6 @@
 class Animations {
   Animations._();
 
-  static const loader = 'assets/animations/loader.flr';
-  static const loader_name = 'Aura';
+  static const loader = 'assets/animations/logo_loader.flr';
+  static const loader_name = 'Logo';
 }

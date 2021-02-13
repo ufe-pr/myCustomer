@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:mycustomers/ui/shared/size_config.dart';
+import 'package:mycustomers/ui/widgets/stateless/loading_animation.dart';
 import 'package:stacked/stacked.dart';
-
 import 'startup_viewmodel.dart';
 
 class StartupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /* 
-    1. Setup for screenutil, only needed once here
-    2. screen resolution (in px) according to iPhone 11 pro max
-    3. Import screen util to all views
-    4. use in this manner E.g Container(width: 50.w, height:200.h)
-    */
-    ScreenUtil.init(context, width: 375, height: 812, allowFontScaling: true);
-
-return ViewModelBuilder<StartupViewModel>.nonReactive(
-      builder: (context, model, child) => Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+    return ViewModelBuilder<StartupViewModel>.nonReactive(
+      builder: (context, model, child) => Container(
+        color: Theme.of(context).backgroundColor,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              height: SizeConfig.yMargin(context, 100),
+              width: SizeConfig.xMargin(context, 100),
+              color: Color.fromRGBO(0, 0, 0, 0.8),
+              child: Opacity(
+                opacity: 0.2,
+                child: Transform.translate(
+                  offset: Offset(SizeConfig.yMargin(context, 1), 0),
+                  child: Container(
+                    child: Image.asset(
+                      'assets/images/startup_bg.png',
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Center(child: LoadingAnimation())
+          ],
         ),
       ),
       viewModelBuilder: () => StartupViewModel(),

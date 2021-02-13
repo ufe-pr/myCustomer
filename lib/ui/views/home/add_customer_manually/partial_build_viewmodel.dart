@@ -1,4 +1,9 @@
+import 'package:hive/hive.dart';
+import 'package:mycustomers/core/models/hive/customer_contacts/customer_contact_h.dart';
 import 'package:stacked/stacked.dart';
+import 'package:mycustomers/app/locator.dart';
+import 'package:mycustomers/app/router.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 
 // partial_builds_viewmodel.dart
@@ -6,7 +11,7 @@ import 'package:stacked/stacked.dart';
 
 class PartialBuildsViewModel extends BaseViewModel {
   
-
+  static const String _boxname = "contactBox";
   String _customerName;
   String _customerPhoneNumber;
 
@@ -21,12 +26,22 @@ class PartialBuildsViewModel extends BaseViewModel {
 
   List<String> get countryCode=>_countryCodes;
   String get dropDownValue=> _dropDownValue;
+  bool success = false;
+ // String error;
+  NavigationService _navigationService = locator<NavigationService>();
+
+  String _title='Add Customer';
+  String _subTitle='Customer Details';
+
+  String get title => _title;
+  String get subTitle =>_subTitle;
 
   
 
   void updateName(String name){
-       _customerName=name;
-       notifyListeners();
+    _customerName=name;
+    print(customerName);
+    notifyListeners();
   }
 
   void updateContact(String phoneNumber){
@@ -39,4 +54,22 @@ class PartialBuildsViewModel extends BaseViewModel {
     _dropDownValue=value;
     notifyListeners();
   }
+
+  // void addContact()async {
+  //   print(customerPhoneNumber);
+  //   if(customerName != null && customerPhoneNumber != null) {
+  //     print('sent');
+  //     var box = await Hive.openBox<CustomerContact>(_boxname);
+  //     CustomerContact contact = new CustomerContact(name: customerName, number: dropDownValue + customerPhoneNumber);
+  //     await box.add(contact).then((value){
+  //       success = true;
+  //       print(success);
+  //       _navigationService.navigateTo(Routes.mainTransaction);
+  //     }).catchError((err){
+  //       error = err;
+  //       success = false;
+  //     });
+  //     print(box.values.toList());
+  //   }
+  // }
 }

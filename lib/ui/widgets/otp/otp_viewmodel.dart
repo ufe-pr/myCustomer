@@ -1,1 +1,0 @@
-//TODO: A super Widget viewmodel

@@ -8,12 +8,12 @@ part of 'transaction.dart';
 
 Transaction _$TransactionFromJson(Map<String, dynamic> json) {
   return Transaction(
-    json['id'] as int,
-    json['customerId'] as int,
-    json['amount'] as num,
-    Transaction.dateFromJson(json['date'] as int),
-    json['description'] as String,
-    Transaction.typeFromJson(json['type'] as int),
+    id: json['id'] as int,
+    customerId: json['customerId'] as int,
+    amount: json['amount'] as num,
+    date: Transaction.dateFromJson(json['date'] as int),
+    description: json['description'] as String,
+    type: Transaction.typeFromJson(json['type'] as int),
   );
 }
 

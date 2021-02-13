@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mycustomers/ui/shared/size_config.dart';
 
 class SocialIconButton extends StatelessWidget {
   final Function onTap;
@@ -11,7 +12,7 @@ class SocialIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8.0),
+      margin: EdgeInsets.all(SizeConfig.xMargin(context, 2)),
       child: InkWell(
         onTap: onTap,
         child: Container(
@@ -21,11 +22,11 @@ class SocialIconButton extends StatelessWidget {
               color: Colors.grey.shade300,
             ),
           ),
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(SizeConfig.yMargin(context, 2)),
           child: Image.asset(
             socialIconUrl,
-            width: 16,
-            height: 16,
+            width: SizeConfig.xMargin(context, 4),
+            height: SizeConfig.yMargin(context, 2),
           ),
         ),
       ),

@@ -8,10 +8,10 @@ part of 'message.dart';
 
 Message _$MessageFromJson(Map<String, dynamic> json) {
   return Message(
-    json['id'] as int,
-    json['message'] as String,
-    Message.typeFromJson(json['type'] as int),
-    json['subject'] as String,
+    id: json['id'] as int,
+    message: json['message'] as String,
+    messageType: Message.typeFromJson(json['type'] as int),
+    subject: json['subject'] as String,
   );
 }
 

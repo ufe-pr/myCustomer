@@ -1,0 +1,4 @@
+enum DataConnectionStatus {
+  disconnected,
+  connected,
+}

@@ -1,24 +1,111 @@
 import 'package:flutter/material.dart';
-import 'package:mycustomers/ui/widgets/shared/under_construction.dart';
-// import 'package:mycustomers/core/models/business_model.dart';
+import 'package:mycustomers/core/localization/app_localization.dart';
+import 'package:flutter_screenutil/screenutil.dart';
+import 'package:mycustomers/ui/shared/const_color.dart';
+import 'package:mycustomers/ui/shared/size_config.dart';
+import 'package:mycustomers/ui/views/home/home_page/tabs/debtors_view.dart';
+import 'package:mycustomers/ui/widgets/stateless/loading_animation.dart';
 import 'package:stacked/stacked.dart';
-// import 'package:stacked_hooks/stacked_hooks.dart';
-// import 'package:flutter_screenutil/size_extension.dart';
-// import '../../widgets/shared/breakdownCard.dart';
-// import '../../widgets/shared/tabs.dart';
+import 'package:flutter_screenutil/size_extension.dart';
 import 'home_page_viewmodel.dart';
+import 'tabs/creditors_view.dart';
 
 class HomePageView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    ScreenUtil.init(context, width: width, height: height);
     return ViewModelBuilder<HomePageViewModel>.reactive(
-      builder: (context, model, child) => Scaffold(
-        body: SafeArea(
-          child: Container(
-            child: UnderConstruction(),
-        ),
+      onModelReady: (model) async {
+        model.getContacts();
+        model.getTransactions();
+      },
+      builder: (context, model, child) => DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          body: Container(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 10.h,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.0),
+                      border: Border(
+                          bottom: BorderSide(color: Colors.grey, width: 0.5))),
+                  child: TabBar(
+                    labelPadding: EdgeInsets.symmetric(horizontal: 1),
+                    unselectedLabelColor: Theme.of(context).cursorColor,
+                    labelColor: Theme.of(context).buttonColor,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorColor: Theme.of(context).buttonColor,
+                    tabs: [
+                      Tab(
+                        child: Container(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              AppLocalizations.of(context).customersOwingYou,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: SizeConfig.yMargin(context, 2),
+                              ),
+                              //maxLines: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              AppLocalizations.of(context).peopleYouOwe,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: SizeConfig.yMargin(context, 2),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Tab(
+                      //   child: Container(
+                      //     child: Align(
+                      //       alignment: Alignment.center,
+                      //       child: Text(
+                      //         "All Customers",
+                      //         textAlign: TextAlign.center,
+                      //          style: TextStyle(
+                      //           fontSize: SizeConfig.yMargin(context, 1.5),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    child: TabBarView(
+                      children: <Widget>[
+                        DebtorsView(),
+                        CreditorsView(),
+                        // model.contacts.length == 0
+                        //     ? Center(
+                        //       child: Text('No Customer Added'),
+                        //     )
+                        //     : ContactList()
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
       viewModelBuilder: () => HomePageViewModel(),
@@ -26,188 +113,128 @@ class HomePageView extends StatelessWidget {
   }
 }
 
-
-/// FORMER HOME LAYOUT
-/// 
-// child: Padding(
-//                 padding: const EdgeInsets.all(10.0),
-//                 child: Column(
-//                   children: <Widget>[
-//                     Container(
-//                         child: Padding(
-//                       padding: const EdgeInsets.all(8.0),
-//                       child: _HeaderBar(),
-//                     )),
-//                     TextField(
-//                       decoration: InputDecoration(
-//                         border: OutlineInputBorder(),
-//                         hintText: 'Search',
-//                         prefixIcon: const Icon(Icons.search),
-//                       ),
-//                     ),
-//                     SizedBox(height: 10),
-//                     BreakdownCard(
-//                       payingAmount: model.amount,
-//                       receivingAmount: model.amount,
-//                       onClick: model.btnViewDetails,
-//                       isPaying: true,
-//                       isReceiving: true,
-//                     ),
-//                     SizedBox(height: 10),
-//                     Expanded(
-//                       child: DefaultTabController(
-//                         length: 3,
-//                         child: Column(
-//                           children: <Widget>[
-//                             TabBar(
-//                               labelPadding:
-//                                   EdgeInsets.symmetric(horizontal: 10),
-//                               unselectedLabelColor: Colors.black,
-//                               indicatorSize: TabBarIndicatorSize.label,
-//                               indicator: BoxDecoration(
-//                                 borderRadius: BorderRadius.circular(20),
-//                                 color: Colors.orange,
-//                               ),
-//                               tabs: [
-//                                 Tab(
-//                                   child: Container(
-//                                     child: Align(
-//                                       alignment: Alignment.center,
-//                                       child: Text("All Customers"),
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Tab(
-//                                   child: Container(
-//                                     child: Align(
-//                                       alignment: Alignment.center,
-//                                       child: Text("Owing Customer"),
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Tab(
-//                                   child: Container(
-//                                     child: Align(
-//                                       alignment: Alignment.center,
-//                                       child: Text("People You Owe"),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                             Container(
-//                               margin: const EdgeInsets.only(top: 10),
-//                               padding:
-//                                   const EdgeInsets.symmetric(horizontal: 10),
-//                               child: Row(
-//                                 mainAxisAlignment:
-//                                     MainAxisAlignment.spaceBetween,
-//                                 children: <Widget>[
-//                                   Text('4 Customers'),
-//                                   Icon(Icons.tune)
-//                                 ],
-//                               ),
-//                             ),
-//                             Expanded(
-//                               flex: 1,
-//                               child: TabBarView(
-//                                 children: [
-//                                   Tabs(),
-//                                   Tabs(),
-//                                   Tabs(),
-//                                 ],
-//                               ),
-//                             ),
-//                             Container(
-//                               height: 50,
-//                               width: double.infinity,
-//                               margin:
-//                                   const EdgeInsets.symmetric(horizontal: 10),
-//                               child: RaisedButton.icon(
-//                                 onPressed: () {
-//                                   model.navigateToAddCustomer();
-//                                 },
-//                                 color: Theme.of(context).primaryColor,
-//                                 icon: Icon(
-//                                   Icons.playlist_add,
-//                                   color: Colors.white,
-//                                 ),
-//                                 label: Text(
-//                                   "Add New Customer",
-//                                   style: TextStyle(color: Colors.white),
-//                                 ),
-//                                 shape: RoundedRectangleBorder(
-//                                   borderRadius: BorderRadius.circular(10),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-
-
-///FORMER HOME LAYOUT WIDGETS
-///
-///
-// class _HeaderBar extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       // crossAxisAlignment: CrossAxisAlignment.stretch,
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: <Widget>[
-//         Expanded(flex: 4, child: BusinessSelector()),
-//         SizedBox(width: 210.w),
-//         Expanded(
-//             flex: 2,
-//             child: Stack(
-//               alignment: Alignment.topRight,
-//               children: [
-//                 Icon(Icons.alarm),
-//                 CircleAvatar(
-//                   backgroundColor: Colors.red.shade800,
-//                   radius: 5.0,
-//                 ),
-                    
-//               ],
-//               overflow: Overflow.clip,
-//             )),
-//       ],
-//     );
-//   }
-// }
-
-// class BusinessSelector extends HookViewModelWidget<HomeViewModel> {
-//   BusinessSelector({Key key}) : super(key: key, reactive: false);
-
-//   @override
-//   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) =>
-//       Container(
-//         child: DropdownButtonHideUnderline(
-//           child: DropdownButton<Business>(
-//             isExpanded: true,
-//             value: model.selectedBusiness,
-//             items: Business.business.map((business) {
-//               return DropdownMenuItem<Business>(
-//                 value: business,
-//                 child: Text(
-//                   business.businessName,
-//                   style: TextStyle(
-//                     fontSize: 14.sp,
-//                     fontWeight: FontWeight.w900,
-//                     //     color: Colors.blueAccent,
-//                   ),
-//                 ),
-//               );
-//             }).toList(),
-//             onChanged: (value) {
-//               model.changeBusiness(value);
-//             },
-//           ),
-//         ),
-//       );
-// }
+class ContactList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<HomePageViewModel>.reactive(
+      builder: (context, model, child) => SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
+                child: TextField(
+                  //controller: model.allCustomersController,
+                  //onChanged: model.searchAllCustomers,
+                  style: TextStyle(
+                    color: Theme.of(context).cursorColor,
+                    fontSize: 14,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context).searchByName,
+                    hintStyle: TextStyle(
+                      color: Color(0xFFACACAC),
+                      fontSize: 14,
+                    ),
+                    contentPadding: const EdgeInsets.only(top: 18.0),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Theme.of(context).textSelectionColor,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  onChanged: model.searchName,
+                ),
+              ),
+              model.sName != null && !model.contains
+                  ? Text(AppLocalizations.of(context).noCustomerFound)
+                  : SizedBox(),
+              for (var item in model.contacts)
+                model.sName != null && model.contains
+                    ? item.name
+                            .toLowerCase()
+                            .contains(model.sName.toLowerCase())
+                        ? Container(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 6),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                top: BorderSide(color: Color(0xFFD1D1D1)),
+                                //bottom: BorderSide(color: Color(0xFFD1D1D1))
+                              )),
+                              child: ListTile(
+                                onTap: () => model.setContact(item.id,
+                                    item.name, item.phoneNumber, item.initials),
+                                leading: item.initials != null
+                                    ? CircleAvatar(
+                                        radius: 25,
+                                        backgroundColor: BrandColors.primary,
+                                        child: Text(item.initials),
+                                      )
+                                    : Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            color: Colors.black,
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                  'assets/images/man.png',
+                                                ),
+                                                fit: BoxFit.cover)),
+                                      ),
+                                title: Text(item.name),
+                              ),
+                            ),
+                          )
+                        : SizedBox()
+                    : model.sName != null && !model.contains
+                        ? SizedBox()
+                        : Container(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 6),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                top: BorderSide(color: Color(0xFFD1D1D1)),
+                                //bottom: BorderSide(color: Color(0xFFD1D1D1))
+                              )),
+                              child: ListTile(
+                                onTap: () => model.setContact(item.id,
+                                    item.name, item.phoneNumber, item.initials),
+                                leading: item.initials != null
+                                    ? CircleAvatar(
+                                        radius: 25,
+                                        backgroundColor: BrandColors.primary,
+                                        child: Text(item.initials),
+                                      )
+                                    : Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            color: Colors.black,
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                  'assets/images/man.png',
+                                                ),
+                                                fit: BoxFit.cover)),
+                                      ),
+                                title: Text(item.name,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize:
+                                            SizeConfig.yMargin(context, 2))),
+                              ),
+                            ),
+                          )
+            ],
+          ),
+        ),
+      ),
+      viewModelBuilder: () => HomePageViewModel(),
+    );
+  }
+}
